@@ -153,7 +153,7 @@ Ext.onReady(function () {
         iconCls: 'icon-config',
         scope: this,
         menu: [
-            {text: 'Materias', icon: 'img/icon_config.png', handler: showWinAdminUser},
+            {text: 'Materias', icon: 'img/icon_config.png', handler: showWinMaterias},
             {text: 'Mensajes', icon: 'img/key.gif', handler: showWinAdminUser},
             {text: 'Observaciones', icon: 'img/key.gif', handler: showWinAdminUser}, '-',
             {text: 'Material didáctico', icon: 'img/icon_estadistica.png', handler: showWinAdminUser}
@@ -237,7 +237,7 @@ Ext.onReady(function () {
                 title: 'Escuela',
                 id: 'panelMapaTab',
                 iconCls: 'icon-mapa',
-                html: '<div STYLE="color:cyan"><center><img src="img/escuela.jpg" width="70%"></center></div>'
+                html: '<div STYLE="color:cyan"><center><img src="img/tesis.jpg" width="70%"></center></div>'
             }]
     });
 

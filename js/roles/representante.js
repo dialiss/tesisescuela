@@ -221,7 +221,7 @@ Ext.onReady(function () {
                 title: 'Escuela',
                 id: 'panelMapaTab',
                 iconCls: 'icon-mapa',
-                html: '<div STYLE="color:cyan"><center><img src="img/escuela.jpg" width="70%"></center></div>'
+                html: '<div STYLE="color:cyan"><center><img src="img/tesis.jpg" width="70%"></center></div>'
             }]
     });
 
