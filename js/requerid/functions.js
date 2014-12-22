@@ -3,15 +3,6 @@ var cadena;
 var data = [];
 
 
-function getLocationUser() {
-    if (navigator.geolocation) {
-        var position = navigator.geolocation.getCurrentPosition(showPositionUser, showError);
-    } else {
-        //x.innerHTML="Geolocation is not supported by this browser.";
-        Ext.example.msg('Error', 'Geolocalizacion no es soportada por este navegador.');
-    }
-}
-
 function showPositionUser(position) {
     lonPos = position.coords.longitude;
     latPos = position.coords.latitude;

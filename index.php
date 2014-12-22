@@ -27,7 +27,7 @@ if (isset($_SESSION["IDROLESCUELA"])) {
         </nav>
         
         <header>            
-            <img src="img/sga.png" alt="Kradac">
+            <img src="img/sga.png" alt="ESCUELA">
         </header>        
         
         <section>          
@@ -35,7 +35,7 @@ if (isset($_SESSION["IDROLESCUELA"])) {
               <div class="control-group">
                 <label class="control-label" for="inputEmail"><strong>Cédula</strong></label>
                 <div class="controls">
-                  <input name = "us" type="text" placeholder="Cédula" onclick="getLocationUser()">
+                  <input name = "us" type="text" placeholder="Cédula">
                 </div>
               </div>
 
@@ -46,12 +46,6 @@ if (isset($_SESSION["IDROLESCUELA"])) {
                   <a href="restablecer.php"><font size="2" color="green"><br><br>¿Olvidaste tu contraseña?</font></a>
                 </div>
               </div>
-
-              <div class="geolocalizacion">                
-                  <input name = "latitud" type="text" id="latitud">
-                  <input name = "longitud" type="text" id="longitud">
-              </div>
-
               <div class="control-group">
                 <div class="controls">                  
                   <button class = "btn btn-primary" type="submit" class="btn">Ingresar</button>
