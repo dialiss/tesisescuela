@@ -1,17 +1,17 @@
-var winAdminObservaciones;
-var formAdminObservacion;
-var gridAdminObservacion;
+var winAdminMensajes;
+var formAdminMensaje;
+var gridAdminMensaje;
 Ext.onReady(function () {
-    Ext.define('DataObservacion', {
+    Ext.define('DataMensaje', {
         extend: 'Ext.data.Model',
         fields: [
-            {name: 'id', mapping: 'id_observacion', type: 'int'},
-            {name: 'id_docente', type: 'int'},
-            {name: 'docente', type: 'string'},
-            {name: 'id_estudiante', type: 'int'},
-            {name: 'estudiante', type: 'string'},
-            {name: 'observacion', type: 'string'},
-            {name: 'fecha', type: 'string'}
+            {name: 'id', mapping: 'id_mensaje', type: 'int'},
+            {name: 'id_envia', type: 'int'},
+            {name: 'envia', type: 'string'},
+            {name: 'id_recibe', type: 'int'},
+            {name: 'recibe', type: 'string'},
+            {name: 'mensaje', type: 'string'},
+            {name: 'fecha_hora_envio', type: 'string'}
 
         ]
 
@@ -22,19 +22,19 @@ Ext.onReady(function () {
     var gridStore = Ext.create('Ext.data.Store', {
         autoLoad: true,
         autoSync: true,
-        model: 'DataObservacion',
+        model: 'DataMensaje',
         proxy: {
             type: 'ajax',
             api: {
-                read: 'php/administracion/observacion/read.php',
-                create: 'php/administracion/observacion/create.php',
-                update: 'php/administracion/observacion/update.php',
-                destroy: 'php/administracion/observacion/destroy.php'
+                read: 'php/administracion/mensaje/read.php',
+                create: 'php/administracion/mensaje/create.php',
+                update: 'php/administracion/mensaje/update.php',
+                destroy: 'php/administracion/mensaje/destroy.php'
             },
             reader: {
                 type: 'json',
                 successProperty: 'success',
-                root: 'observaciones',
+                root: 'mensajes',
                 messageProperty: 'message'
             },
             writer: {
@@ -59,7 +59,7 @@ Ext.onReady(function () {
                     //gridStore.reload();
                     if (operation.state) {
                         gridStore.reload();
-                        formAdminObservacion.getForm().reset();
+                        formAdminMensaje.getForm().reset();
                     }
                 }
             }
@@ -67,14 +67,13 @@ Ext.onReady(function () {
     });
 
 
-    gridAdminObservacion = Ext.create('Ext.grid.Panel', {
+    gridAdminMensaje = Ext.create('Ext.grid.Panel', {
         store: gridStore,
         columns: [
             Ext.create('Ext.grid.RowNumberer', {text: 'Nº', width: 30, align: 'center'}),
-            {header: "Observacion", width: 200, sortable: true, dataIndex: 'observacion', filter: {type: 'string'}},
-            {header: "Docente", width: 200, sortable: true, dataIndex: 'docente', filter: {type: 'string'}},
-            {header: "Estudiante", width: 200, sortable: true, dataIndex: 'estudiante', filter: {type: 'string'}},
-            {header: "Fecha", width: 90, sortable: true, dataIndex: 'fecha', filter: {type: 'string'}}
+            {header: "Envía", width: 200, sortable: true, dataIndex: 'envia', filter: {type: 'string'}}, {header: "Recibe", width: 200, sortable: true, dataIndex: 'recibe', filter: {type: 'string'}},
+            {header: "Mensaje", width: 200, sortable: true, dataIndex: 'mensaje', filter: {type: 'string'}},
+            {header: "Fecha y hora", width: 90, sortable: true, dataIndex: 'fecha_hora_envio', filter: {type: 'string'}}
         ],
         stripeRows: true,
         width: '50%',
@@ -82,43 +81,53 @@ Ext.onReady(function () {
         region: 'west',
         title: 'Registros',
         features: [filters],
-        listeners: {
-            selectionchange: function (thisObject, selected, eOpts) {
-                setActiveRecordObservacion(selected[0] || null);
+        listeners: {selectionchange: function (thisObject, selected, eOpts) {
+                setActiveRecordMensaje(selected[0] || null);
 
             }
         }
     });
 
-    formAdminObservacion = Ext.create('Ext.form.Panel', {
-        region: 'center',
-        title: 'Ingresar datos de la observacion',
+    formAdminMensaje = Ext.create('Ext.form.Panel', {region: 'center',
+        title: 'Ingresar datos del mensaje',
         activeRecord: null,
         bodyPadding: '10 10 10 10',
         margins: '0 0 0 3',
         defaultType: 'textfield',
         layout: 'anchor',
-        fieldDefaults: {
-            msgTarget: 'side'
+        fieldDefaults: {msgTarget: 'side'
         },
-        defaults: {
-            anchor: '100%'
+        defaults: {anchor: '100%'
         },
         items: [{
-                fieldLabel: 'Docente',
+                fieldLabel: 'Envia',
                 afterLabelTextTpl: required,
-                name: 'docente',
+                name: 'envia',
                 allowBlank: false,
                 blankText: 'Este campo es obligatorio',
-                emptyText: 'Nombre del docente...'
+                emptyText: 'Quien envía...'
 
             }, {
-                fieldLabel: 'Estudiante',
+                fieldLabel: 'Recibe',
                 afterLabelTextTpl: required,
-                name: 'estudiante',
+                name: 'recibe',
                 allowBlank: false,
                 blankText: 'Este campo es obligatorio',
-                emptyText: 'Nombre del estdiante...'
+                emptyText: 'Quien recibe...'
+            }, {
+                fieldLabel: 'Mensaje',
+                afterLabelTextTpl: required,
+                name: 'mensaje',
+                allowBlank: false,
+                blankText: 'Este campo es obligatorio',
+                emptyText: 'Mensaje...'
+            }, {
+                fieldLabel: 'Fecha y hora',
+                afterLabelTextTpl: required,
+                name: 'fecha_hora_envio',
+                allowBlank: false,
+                blankText: 'Este campo es obligatorio',
+                emptyText: 'Fecha y hora...'
             }],
         listeners: {
             create: function (form, data) {
@@ -136,34 +145,32 @@ Ext.onReady(function () {
                         text: 'Actualizar',
                         disabled: true,
                         tooltip: 'Actualizar',
-                        handler: onUpdateObservacion
-                    }, {
+                        handler: onUpdateMensaje}, {
                         iconCls: 'icon-add',
                         text: 'Crear',
                         itemId: 'create',
                         tooltip: 'Crear',
-                        handler: onCreateObservacion
+                        handler: onCreateMensaje
                     }, {
                         icon: 'img/clean.png',
                         tooltip: 'Limpiar',
                         text: 'Limpiar campos',
-                        handler: onResetObservacion
+                        handler: onResetMensaje
                     }, {
                         iconCls: 'icon-cancelar',
                         tooltip: 'Cancelar',
                         handler: function () {
-                            winAdminObservaciones.hide();
-                        }
-                    }]
+                            winAdminMensajes.hide();
+                        }}]
             }]
     });
 });
 
-function showWinObservaciones() {
-    if (!winAdminObservaciones) {
-        winAdminObservaciones = Ext.create('Ext.window.Window', {
+function showWinMensajes() {
+    if (!winAdminMensajes) {
+        winAdminMensajes = Ext.create('Ext.window.Window', {
             layout: 'fit',
-            title: 'Administración de observaciones',
+            title: 'Administración de mensajes',
             iconCls: 'icon-user',
             resizable: false,
             width: 1000,
@@ -174,36 +181,35 @@ function showWinObservaciones() {
                     layout: 'border',
                     bodyPadding: 5,
                     items: [
-                        gridAdminObservacion,
-                        formAdminObservacion
-                    ]
-                }]
+                        gridAdminMensaje,
+                        formAdminMensaje
+                    ]}]
         });
     }
-    onResetObservacion();
-    winAdminObservaciones.show();
+    onResetMensaje();
+    winAdminMensajes.show();
 
 }
 
-function setActiveRecordObservacion(record) {
-    formAdminObservacion.activeRecord = record;
+function setActiveRecordMensaje(record) {
+    formAdminMensaje.activeRecord = record;
     if (record) {
-        formAdminObservacion.down('#update').enable();
+        formAdminMensaje.down('#update').enable();
 
-        formAdminObservacion.down('#create').disable();
-        formAdminObservacion.getForm().loadRecord(record);
+        formAdminMensaje.down('#create').disable();
+        formAdminMensaje.getForm().loadRecord(record);
 
     } else {
-        formAdminObservacion.down('#update').disable();
+        formAdminMensaje.down('#update').disable();
 
-        formAdminObservacion.getForm().reset();
+        formAdminMensaje.getForm().reset();
     }
 }
 
-function onUpdateObservacion() {
-    var active = formAdminObservacion.activeRecord,
-            form = formAdminObservacion.getForm();
-//    formAdminUser.down('#create').enable();
+function onUpdateMensaje() {
+    var active = formAdminMensaje.activeRecord,
+            form = formAdminMensaje.getForm();
+    //    formAdminUser.down('#create').enable();
 
     if (!active) {
         return;
@@ -214,7 +220,7 @@ function onUpdateObservacion() {
 
         if (bandera === true) {
             form.updateRecord(active);
-            onResetObservacion();
+            onResetMensaje();
         } else {
             Ext.example.msg('Mensaje', 'Ingrese los datos correctamente');
         }
@@ -224,8 +230,8 @@ function onUpdateObservacion() {
     }
 }
 
-function onCreateObservacion() {
-    var form = formAdminObservacion.getForm();
+function onCreateMensaje() {
+    var form = formAdminMensaje.getForm();
 
     if (form.isValid()) {
         bandera = true;
@@ -233,8 +239,8 @@ function onCreateObservacion() {
 
 
         if (bandera === true) {
-            formAdminObservacion.fireEvent('create', formAdminObservacion, form.getValues());
-            formAdminObservacion.down('#update').disable();
+            formAdminMensaje.fireEvent('create', formAdminMensaje, form.getValues());
+            formAdminMensaje.down('#update').disable();
             form.reset();
         } else {
             Ext.example.msg('Mensaje', 'Ingrese los datos correctamente');
@@ -245,20 +251,20 @@ function onCreateObservacion() {
     }
 }
 
-function onResetObservacion() {
-    formAdminObservacion.getForm().reset();
-    gridAdminObservacion.getView().deselect(gridAdminObservacion.getSelection());
-    formAdminObservacion.down('#create').enable();
+function onResetMensaje() {
+    formAdminMensaje.getForm().reset();
+    gridAdminMensaje.getView().deselect(gridAdminMensaje.getSelection());
+    formAdminMensaje.down('#create').enable();
 }
 
-function onDeleteObservacion() {
+function onDeleteMensaje() {
     Ext.MessageBox.confirm('Atención!', 'Desea eliminar la observación', function (choice) {
         if (choice === 'yes') {
-            var selection = gridAdminObservacion.getView().getSelectionModel().getSelection()[0];
+            var selection = gridAdminMensaje.getView().getSelectionModel().getSelection()[0];
             if (selection) {
-                gridAdminObservacion.store.remove(selection);
-                formAdminObservacion.down('#update').disable();
-                formAdminObservacion.down('#create').enable();
+                gridAdminMensaje.store.remove(selection);
+                formAdminMensaje.down('#update').disable();
+                formAdminMensaje.down('#create').enable();
             }
         }
     });

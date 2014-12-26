@@ -41,6 +41,7 @@ echo "var USUARIOESCUELA = '" . $_SESSION["USUARIOESCUELA"] . "';" .
         <script type="text/javascript" src="js/administracion/ventanaMaterias.js"></script>   
         <script type="text/javascript" src="js/administracion/ventanaObservaciones.js"></script>   
         <script type="text/javascript" src="js/administracion/ventanaMateriales.js"></script>   
+        <script type="text/javascript" src="js/administracion/ventanaMensajes.js"></script>   
     </head>
     <body oncontextmenu = "return false">  
     </body>

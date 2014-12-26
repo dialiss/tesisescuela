@@ -152,7 +152,7 @@ Ext.onReady(function () {
             {text: 'Materias', icon: 'img/icon_config.png', handler: showWinMaterias},
             {text: 'Usuarios', icon: 'img/user_add.gif', handler: showWinAdminUser},
             {text: 'Observaciones', icon: 'img/key.gif', handler: showWinObservaciones},
-            {text: 'Mensajes', icon: 'img/key.gif', handler: showWinAdminUser}, '-',
+            {text: 'Mensajes', icon: 'img/key.gif', handler: showWinMensajes}, '-',
             {text: 'Material didáctico', icon: 'img/icon_estadistica.png', handler: showWinMateriales}
         ]
     });
