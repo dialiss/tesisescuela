@@ -75,12 +75,12 @@ extract($_POST);
                             break;
                     }
                 } else {
-                    $Error = utf8_decode("Problemas en la construcción de la consulta.");
+                    $Error = utf8_decode("Usuario o clave incorrectas o el usuario se encuentra inhabilitado");
                     echo "<script>alert('$Error');</script>";
                     echo "<script>location.href='../../index.php'</script>";
                 }
             } else {
-                $Error = utf8_decode("Usuario o clave incorrectas o el usuario se encuentra inhabilitado");
+                $Error = utf8_decode("Problemas en conexión a su servidor de base de datos, contcate con el administrador.");
                 echo "<script>alert('$Error');</script>";
                 echo "<script>location.href='../../index.php'</script>";
             }

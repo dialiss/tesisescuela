@@ -2,13 +2,8 @@
 var cadena;
 var data = [];
 
-
-function showPositionUser(position) {
-    lonPos = position.coords.longitude;
-    latPos = position.coords.latitude;
-
-    document.getElementById("longitud").value = lonPos;
-    document.getElementById("latitud").value = latPos;
+function test(){
+    alert("Test");
 }
 /*
  Funciones para realizar Geolocalización

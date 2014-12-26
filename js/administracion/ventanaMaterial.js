@@ -1,17 +1,17 @@
-var winAdminObservaciones;
-var formAdminObservacion;
-var gridAdminObservacion;
+var winAdminMaterial;
+var formAdminMaterial;
+var gridAdminMaterial;
 Ext.onReady(function () {
-    Ext.define('DataObservaciòn', {
+    Ext.define('DataMaterial', {
         extend: 'Ext.data.Model',
         fields: [
-            {name: 'id', mapping: 'id_observacion', type: 'int'},
-            {name: 'id_docente', type: 'int'},
+            {name: 'id', mapping: 'id_material', type: 'int'},
+            {name: 'id_materia', type: 'int'},
+            {name: 'materia', type: 'string'},
+            {name: 'id_docente', type: 'int'},            
             {name: 'docente', type: 'string'},
-            {name: 'id_estudiante', type: 'int'},
-            {name: 'estudiante', type: 'string'},
-            {name: 'observacion', type: 'string'},
-            {name: 'fecha', type: 'string'}
+            {name: 'material', type: 'string'},
+            {name: 'archivo', type: 'string'}
 
         ]
 
@@ -22,19 +22,19 @@ Ext.onReady(function () {
     var gridStore = Ext.create('Ext.data.Store', {
         autoLoad: true,
         autoSync: true,
-        model: 'DataObservaciòn',
+        model: 'DataMaterial',
         proxy: {
             type: 'ajax',
             api: {
-                read: 'php/administracion/observacion/read.php',
-                create: 'php/administracion/observacion/create.php',
-                update: 'php/administracion/observacion/update.php',
-                destroy: 'php/administracion/observacion/destroy.php'
+                read: 'php/administracion/material/read.php',
+                create: 'php/administracion/material/create.php',
+                update: 'php/administracion/material/update.php',
+                destroy: 'php/administracion/material/destroy.php'
             },
             reader: {
                 type: 'json',
                 successProperty: 'success',
-                root: 'observaciones',
+                root: 'material',
                 messageProperty: 'message'
             },
             writer: {
@@ -59,7 +59,7 @@ Ext.onReady(function () {
                     //gridStore.reload();
                     if (operation.state) {
                         gridStore.reload();
-                        formAdminObservacion.getForm().reset();
+                        formAdminMaterial.getForm().reset();
                     }
                 }
             }
@@ -67,7 +67,7 @@ Ext.onReady(function () {
     });
 
 
-    gridAdminObservacion = Ext.create('Ext.grid.Panel', {
+    gridAdminMaterial = Ext.create('Ext.grid.Panel', {
         store: gridStore,
         columns: [
             Ext.create('Ext.grid.RowNumberer', {text: 'Nº', width: 30, align: 'center'}),
@@ -90,7 +90,7 @@ Ext.onReady(function () {
         }
     });
 
-    formAdminObservacion = Ext.create('Ext.form.Panel', {
+    formAdminMaterial = Ext.create('Ext.form.Panel', {
         region: 'center',
         title: 'Ingresar datos de la observacion',
         activeRecord: null,
@@ -136,23 +136,23 @@ Ext.onReady(function () {
                         text: 'Actualizar',
                         disabled: true,
                         tooltip: 'Actualizar',
-                        handler: onUpdateObservacion
+                        handler: onUpdateMaterial
                     }, {
                         iconCls: 'icon-add',
                         text: 'Crear',
                         itemId: 'create',
                         tooltip: 'Crear',
-                        handler: onCreateObservacion
+                        handler: onCreateMaterial
                     }, {
                         icon: 'img/clean.png',
                         tooltip: 'Limpiar',
                         text: 'Limpiar campos',
-                        handler: onResetObservacion
+                        handler: onResetMaterial
                     }, {
                         iconCls: 'icon-cancelar',
                         tooltip: 'Cancelar',
                         handler: function () {
-                            winAdminObservaciones.hide();
+                            winAdminMaterial.hide();
                         }
                     }]
             }]
@@ -160,8 +160,8 @@ Ext.onReady(function () {
 });
 
 function showWinObservaciones() {
-    if (!winAdminObservaciones) {
-        winAdminObservaciones = Ext.create('Ext.window.Window', {
+    if (!winAdminMaterial) {
+        winAdminMaterial = Ext.create('Ext.window.Window', {
             layout: 'fit',
             title: 'Administración de materias',
             iconCls: 'icon-user',
@@ -174,35 +174,35 @@ function showWinObservaciones() {
                     layout: 'border',
                     bodyPadding: 5,
                     items: [
-                        gridAdminObservacion,
-                        formAdminObservacion
+                        gridAdminMaterial,
+                        formAdminMaterial
                     ]
                 }]
         });
     }
-    onResetObservacion();
-    winAdminObservaciones.show();
+    onResetMaterial();
+    winAdminMaterial.show();
 
 }
 
 function setActiveRecordObservacion(record) {
-    formAdminObservacion.activeRecord = record;
+    formAdminMaterial.activeRecord = record;
     if (record) {
-        formAdminObservacion.down('#update').enable();
+        formAdminMaterial.down('#update').enable();
 
-        formAdminObservacion.down('#create').disable();
-        formAdminObservacion.getForm().loadRecord(record);
+        formAdminMaterial.down('#create').disable();
+        formAdminMaterial.getForm().loadRecord(record);
 
     } else {
-        formAdminObservacion.down('#update').disable();
+        formAdminMaterial.down('#update').disable();
 
-        formAdminObservacion.getForm().reset();
+        formAdminMaterial.getForm().reset();
     }
 }
 
-function onUpdateObservacion() {
-    var active = formAdminObservacion.activeRecord,
-            form = formAdminObservacion.getForm();
+function onUpdateMaterial() {
+    var active = formAdminMaterial.activeRecord,
+            form = formAdminMaterial.getForm();
 //    formAdminUser.down('#create').enable();
 
     if (!active) {
@@ -214,7 +214,7 @@ function onUpdateObservacion() {
 
         if (bandera === true) {
             form.updateRecord(active);
-            onResetObservacion();
+            onResetMaterial();
         } else {
             Ext.example.msg('Mensaje', 'Ingrese los datos correctamente');
         }
@@ -224,8 +224,8 @@ function onUpdateObservacion() {
     }
 }
 
-function onCreateObservacion() {
-    var form = formAdminObservacion.getForm();
+function onCreateMaterial() {
+    var form = formAdminMaterial.getForm();
 
     if (form.isValid()) {
         bandera = true;
@@ -233,8 +233,8 @@ function onCreateObservacion() {
 
 
         if (bandera === true) {
-            formAdminObservacion.fireEvent('create', formAdminObservacion, form.getValues());
-            formAdminObservacion.down('#update').disable();
+            formAdminMaterial.fireEvent('create', formAdminMaterial, form.getValues());
+            formAdminMaterial.down('#update').disable();
             form.reset();
         } else {
             Ext.example.msg('Mensaje', 'Ingrese los datos correctamente');
@@ -245,20 +245,20 @@ function onCreateObservacion() {
     }
 }
 
-function onResetObservacion() {
-    formAdminObservacion.getForm().reset();
-    gridAdminObservacion.getView().deselect(gridAdminObservacion.getSelection());
-    formAdminObservacion.down('#create').enable();
+function onResetMaterial() {
+    formAdminMaterial.getForm().reset();
+    gridAdminMaterial.getView().deselect(gridAdminMaterial.getSelection());
+    formAdminMaterial.down('#create').enable();
 }
 
-function onDeleteObservacion() {
-    Ext.MessageBox.confirm('Atención!', 'Desea eliminar la materia', function (choice) {
+function onDeleteMaterial() {
+    Ext.MessageBox.confirm('Atención!', 'Desea eliminar el material', function (choice) {
         if (choice === 'yes') {
-            var selection = gridAdminObservacion.getView().getSelectionModel().getSelection()[0];
+            var selection = gridAdminMaterial.getView().getSelectionModel().getSelection()[0];
             if (selection) {
-                gridAdminObservacion.store.remove(selection);
-                formAdminObservacion.down('#update').disable();
-                formAdminObservacion.down('#create').enable();
+                gridAdminMaterial.store.remove(selection);
+                formAdminMaterial.down('#update').disable();
+                formAdminMaterial.down('#create').enable();
             }
         }
     });

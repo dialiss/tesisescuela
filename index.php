@@ -21,8 +21,8 @@ if (isset($_SESSION["IDROLESCUELA"])) {
     <body>
         <nav>
           <ul class="breadcrumb">
-              <li><a href="">Información</a> <span class="divider">/</span></li>
-              <li><a href="#">Acerca de</a> <span class="divider">/</span></li>
+              <li><a href="datos.php">Información</a> <span class="divider">/</span></li>
+              <li><a href="" onclick=test()>Acerca de</a> <span class="divider" >/</span></li>
             </ul>
         </nav>
         
