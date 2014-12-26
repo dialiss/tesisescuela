@@ -71,10 +71,10 @@ Ext.onReady(function () {
         store: gridStore,
         columns: [
             Ext.create('Ext.grid.RowNumberer', {text: 'Nº', width: 30, align: 'center'}),
-            {header: "Observacion", width: 200, sortable: true, dataIndex: 'observacion', filter: {type: 'string'}},
+            {header: "Materia", width: 200, sortable: true, dataIndex: 'materia', filter: {type: 'string'}},
             {header: "Docente", width: 200, sortable: true, dataIndex: 'docente', filter: {type: 'string'}},
-            {header: "Estudiante", width: 200, sortable: true, dataIndex: 'estudiante', filter: {type: 'string'}},
-            {header: "Fecha", width: 90, sortable: true, dataIndex: 'fecha', filter: {type: 'string'}}
+            {header: "Material", width: 200, sortable: true, dataIndex: 'material', filter: {type: 'string'}},
+            {header: "Archivo", width: 90, sortable: true, dataIndex: 'archivo', filter: {type: 'string'}}
         ],
         stripeRows: true,
         width: '50%',
@@ -84,7 +84,7 @@ Ext.onReady(function () {
         features: [filters],
         listeners: {
             selectionchange: function (thisObject, selected, eOpts) {
-                setActiveRecordObservacion(selected[0] || null);
+                setActiveRecordMaterial(selected[0] || null);
 
             }
         }
@@ -92,7 +92,7 @@ Ext.onReady(function () {
 
     formAdminMaterial = Ext.create('Ext.form.Panel', {
         region: 'center',
-        title: 'Ingresar datos de la observacion',
+        title: 'Ingresar datos del material',
         activeRecord: null,
         bodyPadding: '10 10 10 10',
         margins: '0 0 0 3',
@@ -105,6 +105,14 @@ Ext.onReady(function () {
             anchor: '100%'
         },
         items: [{
+                fieldLabel: 'Materia',
+                afterLabelTextTpl: required,
+                name: 'materia',
+                allowBlank: false,
+                blankText: 'Este campo es obligatorio',
+                emptyText: 'Nombre de la materia...'
+
+            }, {
                 fieldLabel: 'Docente',
                 afterLabelTextTpl: required,
                 name: 'docente',
@@ -113,12 +121,19 @@ Ext.onReady(function () {
                 emptyText: 'Nombre del docente...'
 
             }, {
-                fieldLabel: 'Estudiante',
+                fieldLabel: 'Material',
                 afterLabelTextTpl: required,
-                name: 'estudiante',
+                name: 'material',
                 allowBlank: false,
                 blankText: 'Este campo es obligatorio',
-                emptyText: 'Nombre del estdiante...'
+                emptyText: 'Material...'
+            },{
+                fieldLabel: 'Archivo',
+                afterLabelTextTpl: required,
+                name: 'archivo',
+                allowBlank: false,
+                blankText: 'Este campo es obligatorio',
+                emptyText: 'Archivo...'
             }],
         listeners: {
             create: function (form, data) {
@@ -159,11 +174,11 @@ Ext.onReady(function () {
     });
 });
 
-function showWinObservaciones() {
+function showWinMateriales() {
     if (!winAdminMaterial) {
         winAdminMaterial = Ext.create('Ext.window.Window', {
             layout: 'fit',
-            title: 'Administración de materias',
+            title: 'Administración de material didáctico',
             iconCls: 'icon-user',
             resizable: false,
             width: 1000,
@@ -185,7 +200,7 @@ function showWinObservaciones() {
 
 }
 
-function setActiveRecordObservacion(record) {
+function setActiveRecordMaterial(record) {
     formAdminMaterial.activeRecord = record;
     if (record) {
         formAdminMaterial.down('#update').enable();

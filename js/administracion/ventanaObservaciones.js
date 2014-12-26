@@ -163,7 +163,7 @@ function showWinObservaciones() {
     if (!winAdminObservaciones) {
         winAdminObservaciones = Ext.create('Ext.window.Window', {
             layout: 'fit',
-            title: 'Administración de materias',
+            title: 'Administración de observaciones',
             iconCls: 'icon-user',
             resizable: false,
             width: 1000,
@@ -252,7 +252,7 @@ function onResetObservacion() {
 }
 
 function onDeleteObservacion() {
-    Ext.MessageBox.confirm('Atención!', 'Desea eliminar la materia', function (choice) {
+    Ext.MessageBox.confirm('Atención!', 'Desea eliminar la observación', function (choice) {
         if (choice === 'yes') {
             var selection = gridAdminObservacion.getView().getSelectionModel().getSelection()[0];
             if (selection) {

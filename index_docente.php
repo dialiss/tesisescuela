@@ -36,7 +36,7 @@ echo "var USUARIOESCUELA = '" . $_SESSION["USUARIOESCUELA"] . "';" .
         <script type="text/javascript" src="js/requerid/functions.js"></script>
         <script type="text/javascript" src="js/requerid/stores.js"></script>
         <script type="text/javascript" src="js/roles/docente.js"></script>
-        <script type="text/javascript" src="js/administracion/ventanaUsuario.js"></script>
+        <script type="text/javascript" src="js/administracion/ventanaUsuarios.js"></script>
         <script type="text/javascript" src="js/extra/ventanaCreditos.js"></script>     
     </head>
     <body oncontextmenu = "return false">  
